@@ -12,3 +12,9 @@ public enum PoliticaAlocacao
     BestFit,
     WorstFit
 }
+
+public enum TipoRequisicao
+{
+    In,
+    Out
+}
