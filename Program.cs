@@ -26,29 +26,48 @@ public static class Program
     private static void PromptUsuario()
     {
         var tamanhoMemoria = AnsiConsole.Prompt(
-            new TextPrompt<uint>("Qual o [green]tamanho da memória[/]?")
-                .ValidationErrorMessage("[red]O tamanho da memória deve ser uma potência de 2.[/]")
+            new TextPrompt<uint>("Qual o [green]tamanho da memoria[/]?")
+                .ValidationErrorMessage("[red]O tamanho da memoria deve ser uma potencia de 2.[/]")
                 .Validate(memoria => memoria > 0 && (memoria & (memoria - 1)) == 0
                     ? ValidationResult.Success()
-                    : ValidationResult.Error())
+                    : ValidationResult.Error()
+                )
         );
         Console.WriteLine($"Tamanho selecionado: {tamanhoMemoria}");
 
         var tipoParticao = Parse<TipoParticao>(AnsiConsole.Prompt(
             new SelectionPrompt<string>()
-                .Title("Qual o [green]tipo de partição[/]?")
+                .Title("Qual o [green]tipo de particao[/]?")
                 .AddChoices("Fixa", "Variavel", "Buddy")
         ));
-        Console.WriteLine($"Tipo de partição selecionado: {tipoParticao}");
+        Console.WriteLine($"Tipo de particao selecionado: {tipoParticao}");
 
-        if (tipoParticao == TipoParticao.Variavel)
+        switch (tipoParticao)
         {
-            var politicaAlocacao = Parse<PoliticaAlocacao>(AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Qual a [green]política de alocação[/]?")
-                    .AddChoices("BestFit", "WorstFit")
-            ));
-            Console.WriteLine($"Política de alocação selecionada: {politicaAlocacao}");
+            case TipoParticao.Fixa:
+            {
+                var tamanhoParticao = AnsiConsole.Prompt(
+                    new TextPrompt<uint>("Qual o [green]tamanho da particao[/]?")
+                        .ValidationErrorMessage("[red]O tamanho da particao deve ser uma potencia de 2.[/]")
+                        .Validate(particao => particao > 0 && (particao & (particao - 1)) == 0
+                            ? ValidationResult.Success()
+                            : ValidationResult.Error()
+                        )
+                );
+                break;
+            }
+            case TipoParticao.Variavel:
+            {
+                var politicaAlocacao = Parse<PoliticaAlocacao>(AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("Qual a [green]politica de alocacao[/]?")
+                        .AddChoices("BestFit", "WorstFit")
+                ));
+                Console.WriteLine($"Politica de alocacao selecionada: {politicaAlocacao}");
+                break;
+            }
+            case TipoParticao.Buddy:
+                break;
         }
     }
 
