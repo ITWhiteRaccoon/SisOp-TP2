@@ -3,8 +3,8 @@ IN(B, 15)   #Requisita a alocação de 15 espaços para o processo B
 IN(C, 23)   #Requisita a alocação de 23 espaços para o processo C
 OUT(A)      #Libera o espaço alocado pelo processo A
 OUT(B)      #Libera o espaço alocado pelo processo B
-IN(D, 13)   #Requisita a alocação de 13 espaços para o processo D
+In(D, 13)   #Requisita a alocação de 13 espaços para o processo D
 OUT(C)      #Libera o espaço alocado pelo processo C
-IN(E,32)    #Requisita a alocação de 32 espaços para o processo E
-OUT(E)      #Libera o espaço alocado pelo processo E
-OUT(D)      #Libera o espaço alocado pelo processo D
+in(E,32)    #Requisita a alocação de 32 espaços para o processo E
+out(E)      #Libera o espaço alocado pelo processo E
+OuT(D)      #Libera o espaço alocado pelo processo D

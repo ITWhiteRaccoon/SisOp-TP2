@@ -18,16 +18,13 @@
       <None Update="Input\fabiano_passuelo_hessel.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Input\buddy.yaml">
+      <None Update="Input\Ex1.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Input\fixa.yaml">
+      <None Update="Input\Ex2.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Input\varBest.yaml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Input\varWorst.yaml">
+      <None Update="Input\ExT.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

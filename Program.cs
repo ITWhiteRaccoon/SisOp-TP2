@@ -7,6 +7,24 @@ public static class Program
 {
     public static void Main(string[] args)
     {
+        Console.WriteLine("=== Ex1 ===");
+        Util.CarregarArquivo("Input/Ex1.txt");
+        Console.WriteLine("===     ===");
+        Console.WriteLine();
+
+        Console.WriteLine("=== Ex2 ===");
+        Util.CarregarArquivo("Input/Ex2.txt");
+        Console.WriteLine("===     ===");
+        Console.WriteLine();
+
+        Console.WriteLine("=== ExT ===");
+        Util.CarregarArquivo("Input/ExT.txt");
+        Console.WriteLine("===     ===");
+        Console.WriteLine();
+    }
+
+    private static void PromptUsuario()
+    {
         var tamanhoMemoria = AnsiConsole.Prompt(
             new TextPrompt<uint>("Qual o [green]tamanho da memória[/]?")
                 .ValidationErrorMessage("[red]O tamanho da memória deve ser uma potência de 2.[/]")
