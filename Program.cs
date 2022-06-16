@@ -5,26 +5,26 @@ namespace SisOp_TP2;
 
 public static class Program
 {
+    private const string InputFolder = "Input";
+
     public static void Main(string[] args)
     {
-        Console.WriteLine("=== Ex1 ===");
-        Util.CarregarArquivo("Input/Ex1.txt");
-        Console.WriteLine("===     ===");
-        Console.WriteLine();
+        var listaArquivos = Directory.GetFiles($"{InputFolder}/");
+        for (var i = 0; i < listaArquivos.Length; i++)
+        {
+            listaArquivos[i] = listaArquivos[i][(InputFolder.Length + 1)..];
+        }
 
-        Console.WriteLine("=== Ex2 ===");
-        Util.CarregarArquivo("Input/Ex2.txt");
-        Console.WriteLine("===     ===");
-        Console.WriteLine();
+        var arquivo = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title($"Qual o [green]arquivo desejado[/]? (listando arquivos da pasta {InputFolder})")
+                .AddChoices(listaArquivos)
+        );
+        arquivo = $"{InputFolder}/{arquivo}";
+        Console.WriteLine($"Arquivo selecionado: {arquivo}");
 
-        Console.WriteLine("=== ExT ===");
-        Util.CarregarArquivo("Input/ExT.txt");
-        Console.WriteLine("===     ===");
-        Console.WriteLine();
-    }
+        var requisicoes = Util.CarregarArquivo(arquivo);
 
-    private static void PromptUsuario()
-    {
         var tamanhoMemoria = AnsiConsole.Prompt(
             new TextPrompt<uint>("Qual o [green]tamanho da memoria[/]?")
                 .ValidationErrorMessage("[red]O tamanho da memoria deve ser uma potencia de 2.[/]")
@@ -33,7 +33,7 @@ public static class Program
                     : ValidationResult.Error()
                 )
         );
-        Console.WriteLine($"Tamanho selecionado: {tamanhoMemoria}");
+        Console.WriteLine($"Tamanho de memoria selecionado: {tamanhoMemoria}");
 
         var tipoParticao = Parse<TipoParticao>(AnsiConsole.Prompt(
             new SelectionPrompt<string>()
@@ -54,6 +54,8 @@ public static class Program
                             : ValidationResult.Error()
                         )
                 );
+                Console.WriteLine($"Tamanho de partição selecionado: {tamanhoParticao}");
+                GerenciadorFixo.Iniciar(tamanhoMemoria, tamanhoParticao);
                 break;
             }
             case TipoParticao.Variavel:
@@ -64,16 +66,38 @@ public static class Program
                         .AddChoices("BestFit", "WorstFit")
                 ));
                 Console.WriteLine($"Politica de alocacao selecionada: {politicaAlocacao}");
+                GerenciadorVariavel.Iniciar(tamanhoMemoria, politicaAlocacao);
                 break;
             }
             case TipoParticao.Buddy:
+                GerenciadorBuddy.Iniciar(tamanhoMemoria);
                 break;
         }
     }
 
+    private static void TesteArquivos()
+    {
+        Console.WriteLine("=== Ex1 ===");
+        Util.CarregarArquivo($"{InputFolder}/Ex1.txt");
+        Console.WriteLine("===     ===");
+        Console.WriteLine();
+
+        Console.WriteLine("=== Ex2 ===");
+        Util.CarregarArquivo($"{InputFolder}/Ex2.txt");
+        Console.WriteLine("===     ===");
+        Console.WriteLine();
+
+        Console.WriteLine("=== ExT ===");
+        Util.CarregarArquivo($"{InputFolder}/ExT.txt");
+        Console.WriteLine("===     ===");
+        Console.WriteLine();
+    }
+
+    private static void PromptUsuario() { }
+
     public static void PrintFabiano()
     {
-        var image = new CanvasImage("Input/fabiano_passuelo_hessel.png");
+        var image = new CanvasImage($"{InputFolder}/fabiano_passuelo_hessel.png");
         AnsiConsole.Write(image);
         Console.ReadKey();
     }
