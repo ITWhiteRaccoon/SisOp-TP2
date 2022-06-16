@@ -55,7 +55,7 @@ public static class Program
                         )
                 );
                 Console.WriteLine($"Tamanho de partição selecionado: {tamanhoParticao}");
-                GerenciadorFixo.Iniciar(tamanhoMemoria, tamanhoParticao);
+                var gerenciador = new GerenciadorFixo(tamanhoMemoria, tamanhoParticao);
                 break;
             }
             case TipoParticao.Variavel:
@@ -66,11 +66,11 @@ public static class Program
                         .AddChoices("BestFit", "WorstFit")
                 ));
                 Console.WriteLine($"Politica de alocacao selecionada: {politicaAlocacao}");
-                GerenciadorVariavel.Iniciar(tamanhoMemoria, politicaAlocacao);
+                var gerenciador = new GerenciadorVariavel(tamanhoMemoria, politicaAlocacao);
                 break;
             }
             case TipoParticao.Buddy:
-                GerenciadorBuddy.Iniciar(tamanhoMemoria);
+                var gerenciador = new GerenciadorBuddy(tamanhoMemoria);
                 break;
         }
     }

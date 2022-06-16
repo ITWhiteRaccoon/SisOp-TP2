@@ -2,7 +2,16 @@
 
 public class GerenciadorFixo
 {
-    public static void Iniciar(uint tamanhoMemoria, uint tamanhoParticao)
+    private bool[] memoria;
+    private uint tamanhoParticao;
+
+    public GerenciadorFixo(uint tamanhoMemoria, uint tamanhoParticao)
+    {
+        memoria = new bool[tamanhoMemoria];
+        tamanhoParticao = this.tamanhoParticao;
+    }
+
+    public void Rodar(List<Requisicao> requisicoes)
     {
         
     }

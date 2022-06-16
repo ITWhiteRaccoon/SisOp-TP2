@@ -2,5 +2,15 @@
 
 public class GerenciadorVariavel
 {
-    public static void Iniciar(uint tamanhoMemoria, PoliticaAlocacao politicaAlocacao) { }
+    private bool[] memoria;
+
+    public GerenciadorVariavel(uint tamanhoMemoria, PoliticaAlocacao politicaAlocacao)
+    {
+        memoria = new bool[tamanhoMemoria];
+    }
+
+    public void Rodar(List<Requisicao> requisicoes)
+    {
+        
+    }
 }

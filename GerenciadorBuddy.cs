@@ -2,7 +2,14 @@
 
 public class GerenciadorBuddy
 {
-    public static void Iniciar(uint tamanhoMemoria)
+    private bool[] memoria;
+
+    public GerenciadorBuddy(uint tamanhoMemoria)
+    {
+        memoria = new bool[tamanhoMemoria];
+    }
+
+    public void Rodar(List<Requisicao> requisicoes)
     {
         
     }
