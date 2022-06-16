@@ -1,4 +1,6 @@
-﻿namespace SisOp_TP2;
+﻿using System.Text;
+
+namespace SisOp_TP2;
 
 public class GerenciadorFixo
 {
@@ -13,11 +15,26 @@ public class GerenciadorFixo
 
     public void Rodar(List<Requisicao> requisicoes)
     {
+        foreach (var requisicao in requisicoes)
+        {
+            if (requisicao.TipoRequisicao == TipoRequisicao.IN)
+            {
+                
+            }
+            else
+            {
+                
+            }
+        }
+    }
+
+    private bool Inserir(string processo, uint espaco)
+    {
         
     }
 
     public override string ToString()
     {
-        return base.ToString();
+        var sb = new StringBuilder("|");
     }
 }

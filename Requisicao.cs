@@ -2,9 +2,9 @@
 
 public class Requisicao
 {
-    private TipoRequisicao TipoRequisicao;
-    private uint Espaco;
-    private string Processo;
+    public TipoRequisicao TipoRequisicao { get; }
+    public uint Espaco { get; }
+    public string Processo { get; }
 
     public Requisicao(TipoRequisicao tipoRequisicao, string processo)
     {
