@@ -15,4 +15,9 @@ public class GerenciadorFixo
     {
         
     }
+
+    public override string ToString()
+    {
+        return base.ToString();
+    }
 }

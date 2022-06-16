@@ -13,4 +13,9 @@ public class GerenciadorBuddy
     {
         
     }
+
+    public override string ToString()
+    {
+        return base.ToString();
+    }
 }

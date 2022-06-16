@@ -48,14 +48,16 @@ public static class Program
             {
                 var tamanhoParticao = AnsiConsole.Prompt(
                     new TextPrompt<uint>("Qual o [green]tamanho da particao[/]?")
-                        .ValidationErrorMessage("[red]O tamanho da particao deve ser uma potencia de 2.[/]")
-                        .Validate(particao => particao > 0 && (particao & (particao - 1)) == 0
-                            ? ValidationResult.Success()
-                            : ValidationResult.Error()
+                        .ValidationErrorMessage(
+                            "[red]O tamanho da particao deve ser uma potencia de 2 menor ou igual ao tamanho total da memória.[/]")
+                        .Validate(particao =>
+                            particao > 0 && (particao & (particao - 1)) == 0 && particao <= tamanhoMemoria
+                                ? ValidationResult.Success()
+                                : ValidationResult.Error()
                         )
                 );
                 Console.WriteLine($"Tamanho de partição selecionado: {tamanhoParticao}");
-                var gerenciador = new GerenciadorFixo(tamanhoMemoria, tamanhoParticao);
+                var gerenciadorFixo = new GerenciadorFixo(tamanhoMemoria, tamanhoParticao);
                 break;
             }
             case TipoParticao.Variavel:
@@ -66,11 +68,11 @@ public static class Program
                         .AddChoices("BestFit", "WorstFit")
                 ));
                 Console.WriteLine($"Politica de alocacao selecionada: {politicaAlocacao}");
-                var gerenciador = new GerenciadorVariavel(tamanhoMemoria, politicaAlocacao);
+                var gerenciadorVariavel = new GerenciadorVariavel(tamanhoMemoria, politicaAlocacao);
                 break;
             }
             case TipoParticao.Buddy:
-                var gerenciador = new GerenciadorBuddy(tamanhoMemoria);
+                var gerenciadorBuddy = new GerenciadorBuddy(tamanhoMemoria);
                 break;
         }
     }
