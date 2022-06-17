@@ -135,7 +135,7 @@ public class GerenciadorVariavel
             }
             else
             {
-                sb.Append($" [red]{espaco.Processo}[/] |");
+                sb.Append($" [yellow]{espaco.Processo}[/] |");
             }
         }
 

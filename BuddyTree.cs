@@ -56,17 +56,20 @@ public class BuddyTree
         if (processoRemover != null)
         {
             var sup = processoRemover.Pai;
-            processoRemover = new BuddyTreeNode(null, processoRemover.Inicio, processoRemover.Tamanho) { Pai = sup };
+            processoRemover.Processo = null;
+            processoRemover.TamanhoOcupado = 0;
 
             while (sup != null)
             {
-                if (sup.Esquerda.Processo == null && sup.Direita.Processo == null)
+                if (sup.Esquerda.Processo != null || sup.Esquerda.Dividido ||
+                    sup.Direita.Processo != null || sup.Direita.Dividido)
                 {
-                    sup.Esquerda = null;
-                    sup.Direita = null;
-                    sup.Dividido = false;
+                    return; //Se subir um nivel e houver conteudo em algum dos filhos, para de tentar mesclar
                 }
 
+                sup.Esquerda = null;
+                sup.Direita = null;
+                sup.Dividido = false;
                 sup = sup.Pai;
             }
         }
@@ -86,8 +89,6 @@ public class BuddyTree
 
         return null;
     }
-
-    private static void MesclarEspacos(BuddyTreeNode inicio) { }
 
     private static List<BuddyTreeNode> GetLeafNodes(BuddyTreeNode inicio, List<BuddyTreeNode> folhas)
     {
@@ -112,7 +113,7 @@ public class BuddyTree
 
     public override string ToString()
     {
-        return string.Join('|', GetLeafNodes(_root, new List<BuddyTreeNode>()));
+        return $"|{string.Join('|', GetLeafNodes(_root, new List<BuddyTreeNode>()))}|";
     }
 
     private class BuddyTreeNode
@@ -134,15 +135,16 @@ public class BuddyTree
             Dividido = false;
         }
 
-
         public override string ToString()
         {
-            if (Processo != null && Tamanho != TamanhoOcupado)
+            if (Processo != null)
             {
-                return $" {TamanhoOcupado} | {Tamanho - TamanhoOcupado} ";
+                return Tamanho == TamanhoOcupado
+                    ? $" [yellow]{Processo}[/] "
+                    : $" [yellow]{Processo}[/] | [red]{Tamanho - TamanhoOcupado}[/] ";
             }
 
-            return $" {Tamanho} ";
+            return $" [green]{Tamanho}[/] ";
         }
     }
 }
