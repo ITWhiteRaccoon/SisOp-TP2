@@ -5,12 +5,12 @@ namespace SisOp_TP2;
 
 public class GerenciadorFixo
 {
-    private List<Mapeador> _mapa;
+    private List<Espaco> _mapa;
     private uint _tamanhoParticao;
 
     public GerenciadorFixo(uint tamanhoMemoria, uint tamanhoParticao)
     {
-        _mapa = new List<Mapeador> { new(null, 0, tamanhoMemoria) };
+        _mapa = new List<Espaco> { new(null, 0, tamanhoMemoria) };
         _tamanhoParticao = tamanhoParticao;
 
         //TODO: CHECAR SE O TAMANHO DA PARTICAO É SEMPRE DIVISOR DO TAMANHO DA MEMORIA
@@ -92,7 +92,7 @@ public class GerenciadorFixo
 
             if (tamanhoInserido < tamanhoEscolhido)
             {
-                var espacoNovo = new Mapeador(processoInserido, _mapa[indiceEscolhido.Value].Inicio, tamanhoInserido);
+                var espacoNovo = new Espaco(processoInserido, _mapa[indiceEscolhido.Value].Inicio, tamanhoInserido);
                 _mapa[indiceEscolhido.Value].Inicio += tamanhoInserido;
                 _mapa[indiceEscolhido.Value].Tamanho -= tamanhoInserido;
                 _mapa.Insert(indiceEscolhido.Value, espacoNovo);

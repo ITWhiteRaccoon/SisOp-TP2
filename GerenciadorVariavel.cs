@@ -5,12 +5,12 @@ namespace SisOp_TP2;
 
 public class GerenciadorVariavel
 {
-    private List<Mapeador> _mapa;
+    private List<Espaco> _mapa;
     private PoliticaAlocacao _politicaAlocacao;
 
     public GerenciadorVariavel(uint tamanhoMemoria, PoliticaAlocacao politicaAlocacao)
     {
-        _mapa = new List<Mapeador> { new(null, 0, tamanhoMemoria) };
+        _mapa = new List<Espaco> { new(null, 0, tamanhoMemoria) };
         _politicaAlocacao = politicaAlocacao;
     }
 
@@ -55,14 +55,12 @@ public class GerenciadorVariavel
         {
             for (var i = 0; i < _mapa.Count; i++)
             {
-                if (_mapa[i].Processo == null) //Quer dizer que marca espaço livre, não processo
+                if (_mapa[i].Processo == null && //Quer dizer que marca espaço livre, não processo
+                    _mapa[i].Tamanho >= tamanhoInserido && //Cabe o processo
+                    (_mapa[i].Tamanho < tamanhoEscolhido || tamanhoEscolhido == null)) //Best-fit
                 {
-                    if (_mapa[i].Tamanho >= tamanhoInserido &&
-                        (_mapa[i].Tamanho < tamanhoEscolhido || tamanhoEscolhido == null))
-                    {
-                        indiceEscolhido = i;
-                        tamanhoEscolhido = _mapa[i].Tamanho;
-                    }
+                    indiceEscolhido = i;
+                    tamanhoEscolhido = _mapa[i].Tamanho;
                 }
             }
         }
@@ -70,19 +68,17 @@ public class GerenciadorVariavel
         {
             for (var i = 0; i < _mapa.Count; i++)
             {
-                if (_mapa[i].Processo == null) //Quer dizer que marca espaço livre, não processo
+                if (_mapa[i].Processo == null && //Quer dizer que marca espaço livre, não processo
+                    _mapa[i].Tamanho >= tamanhoInserido && //Cabe o processo
+                    (_mapa[i].Tamanho > tamanhoEscolhido || tamanhoEscolhido == null)) //Worst-fit
                 {
-                    if (_mapa[i].Tamanho >= tamanhoInserido &&
-                        (_mapa[i].Tamanho > tamanhoEscolhido || tamanhoEscolhido == null))
-                    {
-                        indiceEscolhido = i;
-                        tamanhoEscolhido = _mapa[i].Tamanho;
-                    }
+                    indiceEscolhido = i;
+                    tamanhoEscolhido = _mapa[i].Tamanho;
                 }
             }
         }
 
-        if (indiceEscolhido != null && tamanhoEscolhido != null)
+        if (indiceEscolhido != null && tamanhoEscolhido != null) //Se algum espaco foi encontrado
         {
             if (tamanhoInserido == tamanhoEscolhido)
             {
@@ -92,7 +88,7 @@ public class GerenciadorVariavel
 
             if (tamanhoInserido < tamanhoEscolhido)
             {
-                var espacoNovo = new Mapeador(processoInserido, _mapa[indiceEscolhido.Value].Inicio, tamanhoInserido);
+                var espacoNovo = new Espaco(processoInserido, _mapa[indiceEscolhido.Value].Inicio, tamanhoInserido);
                 _mapa[indiceEscolhido.Value].Inicio += tamanhoInserido;
                 _mapa[indiceEscolhido.Value].Tamanho -= tamanhoInserido;
                 _mapa.Insert(indiceEscolhido.Value, espacoNovo);
