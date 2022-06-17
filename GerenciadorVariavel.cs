@@ -27,7 +27,14 @@ public class GerenciadorVariavel
         {
             if (requisicao.TipoRequisicao == TipoRequisicao.IN)
             {
-                Inserir(requisicao.Processo, requisicao.Espaco);
+                try
+                {
+                    Inserir(requisicao.Processo, requisicao.Espaco);
+                }
+                catch (OutOfMemoryException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             else
             {

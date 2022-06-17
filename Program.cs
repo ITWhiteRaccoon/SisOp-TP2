@@ -9,7 +9,6 @@ public static class Program
 
     public static void Main(string[] args)
     {
-        PrintFabiano();
         var listaArquivos = Directory.GetFiles($"{InputFolder}/");
         for (var i = 0; i < listaArquivos.Length; i++)
         {
