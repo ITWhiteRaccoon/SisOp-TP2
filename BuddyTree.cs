@@ -37,8 +37,8 @@ public class BuddyTree
             var metade = nodo.Tamanho / 2;
             while (metade >= tamanho)
             {
-                nodo.Esquerda = new BuddyTreeNode(null, nodo.Inicio, metade);
-                nodo.Direita = new BuddyTreeNode(null, metade, metade);
+                nodo.Esquerda = new BuddyTreeNode(null, nodo.Inicio, metade) { Pai = nodo };
+                nodo.Direita = new BuddyTreeNode(null, metade, metade) { Pai = nodo };
                 nodo.Dividido = true;
                 nodo = nodo.Esquerda;
                 metade = nodo.Tamanho / 2;
@@ -48,6 +48,71 @@ public class BuddyTree
         }
 
         return null;
+    }
+
+    public void Remover(string processo)
+    {
+        var processoRemover = EncontrarProcesso(_root, processo);
+        if (processoRemover != null)
+        {
+            var sup = processoRemover.Pai;
+            processoRemover = new BuddyTreeNode(null, processoRemover.Inicio, processoRemover.Tamanho) { Pai = sup };
+
+            while (sup != null)
+            {
+                if (sup.Esquerda.Processo == null && sup.Direita.Processo == null)
+                {
+                    sup.Esquerda = null;
+                    sup.Direita = null;
+                    sup.Dividido = false;
+                }
+
+                sup = sup.Pai;
+            }
+        }
+    }
+
+    private static BuddyTreeNode? EncontrarProcesso(BuddyTreeNode inicio, string processo)
+    {
+        if (inicio.Processo != null && inicio.Processo == processo)
+        {
+            return inicio;
+        }
+
+        if (inicio.Processo == null && inicio.Dividido)
+        {
+            return EncontrarProcesso(inicio.Esquerda, processo) ?? EncontrarProcesso(inicio.Direita, processo);
+        }
+
+        return null;
+    }
+
+    private static void MesclarEspacos(BuddyTreeNode inicio) { }
+
+    private static List<BuddyTreeNode> GetLeafNodes(BuddyTreeNode inicio, List<BuddyTreeNode> folhas)
+    {
+        if (inicio.Esquerda == null && inicio.Direita == null)
+        {
+            folhas.Add(inicio);
+            return folhas;
+        }
+
+        if (inicio.Esquerda != null)
+        {
+            GetLeafNodes(inicio.Esquerda, folhas);
+        }
+
+        if (inicio.Direita != null)
+        {
+            GetLeafNodes(inicio.Direita, folhas);
+        }
+
+        return folhas;
+    }
+
+    public override string ToString()
+    {
+        return string.Join('|', GetLeafNodes(_root, new List<BuddyTreeNode>()));
     }
 
     private class BuddyTreeNode
@@ -79,31 +144,5 @@ public class BuddyTree
 
             return $" {Tamanho} ";
         }
-    }
-
-    private static List<BuddyTreeNode> GetLeafNodes(BuddyTreeNode inicio, List<BuddyTreeNode> folhas)
-    {
-        if (inicio.Esquerda == null && inicio.Direita == null)
-        {
-            folhas.Add(inicio);
-            return folhas;
-        }
-
-        if (inicio.Esquerda != null)
-        {
-            GetLeafNodes(inicio.Esquerda, folhas);
-        }
-
-        if (inicio.Direita != null)
-        {
-            GetLeafNodes(inicio.Direita, folhas);
-        }
-
-        return folhas;
-    }
-
-    public override string ToString()
-    {
-        return string.Join('|', GetLeafNodes(_root, new List<BuddyTreeNode>()));
     }
 }
