@@ -28,4 +28,11 @@ public class Requisicao
         Processo = processo;
         Espaco = espaco;
     }
+
+    public override string ToString()
+    {
+        return TipoRequisicao == TipoRequisicao.IN
+            ? $"{TipoRequisicao}({Processo},{Espaco})"
+            : $"{TipoRequisicao}({Processo})";
+    }
 }

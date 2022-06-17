@@ -9,6 +9,7 @@ public static class Program
 
     public static void Main(string[] args)
     {
+        PrintFabiano();
         var listaArquivos = Directory.GetFiles($"{InputFolder}/");
         for (var i = 0; i < listaArquivos.Length; i++)
         {
@@ -58,6 +59,7 @@ public static class Program
                 );
                 Console.WriteLine($"Tamanho de partição selecionado: {tamanhoParticao}");
                 var gerenciadorFixo = new GerenciadorFixo(tamanhoMemoria, tamanhoParticao);
+                gerenciadorFixo.Rodar(requisicoes);
                 break;
             }
             case TipoParticao.Variavel:
@@ -69,10 +71,12 @@ public static class Program
                 ));
                 Console.WriteLine($"Politica de alocacao selecionada: {politicaAlocacao}");
                 var gerenciadorVariavel = new GerenciadorVariavel(tamanhoMemoria, politicaAlocacao);
+                gerenciadorVariavel.Rodar(requisicoes);
                 break;
             }
             case TipoParticao.Buddy:
                 var gerenciadorBuddy = new GerenciadorBuddy(tamanhoMemoria);
+                gerenciadorBuddy.Rodar(requisicoes);
                 break;
         }
     }
@@ -101,6 +105,5 @@ public static class Program
     {
         var image = new CanvasImage($"{InputFolder}/fabiano_passuelo_hessel.png");
         AnsiConsole.Write(image);
-        Console.ReadKey();
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace SisOp_TP2;
+﻿using System.Text;
+using Spectre.Console;
+
+namespace SisOp_TP2;
 
 public class GerenciadorVariavel
 {
@@ -13,6 +16,13 @@ public class GerenciadorVariavel
 
     public void Rodar(List<Requisicao> requisicoes)
     {
+        var table = new Table().RoundedBorder();
+        table.AddColumns(
+            new TableColumn("[bold underline]Comando[/]").Centered().NoWrap(),
+            new TableColumn("[bold underline]Memoria[/]").Centered().NoWrap()
+        );
+
+        table.AddRow("", ToString());
         foreach (var requisicao in requisicoes)
         {
             if (requisicao.TipoRequisicao == TipoRequisicao.IN)
@@ -23,7 +33,11 @@ public class GerenciadorVariavel
             {
                 Remover(requisicao.Processo);
             }
+
+            table.AddRow(requisicao.ToString(), ToString());
         }
+
+        AnsiConsole.Write(table);
     }
 
     private void Inserir(string processoInserido, uint tamanhoInserido)
@@ -109,6 +123,19 @@ public class GerenciadorVariavel
 
     public override string ToString()
     {
-        return base.ToString();
+        var sb = new StringBuilder("|");
+        foreach (var espaco in _mapa)
+        {
+            if (espaco.Processo == null)
+            {
+                sb.Append($" [green]{espaco.Tamanho}[/] |");
+            }
+            else
+            {
+                sb.Append($" [red]{espaco.Processo}[/] |");
+            }
+        }
+
+        return sb.ToString();
     }
 }
