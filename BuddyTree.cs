@@ -17,7 +17,7 @@ public class BuddyTree
         if (nodo == null)
         {
             throw new OutOfMemoryException(
-                $"Não há espaço suficiente para o processo {processo} de tamanho {tamanho}.");
+                $"Nao ha espaco suficiente para o processo {processo} de tamanho {tamanho}.");
         }
 
         nodo.Processo = processo;
@@ -26,7 +26,7 @@ public class BuddyTree
 
     private static BuddyTreeNode? EncontrarDisponivel(BuddyTreeNode inicio, uint tamanho)
     {
-        if (inicio.Processo == null && inicio.Tamanho >= tamanho) //Se o nodo não está ocupado e cabe o que quero
+        if (inicio.Processo == null && inicio.Tamanho >= tamanho) //Se o nodo nao esta ocupado e cabe o que quero
         {
             if (inicio.Dividido)
             {

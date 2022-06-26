@@ -1,0 +1,10 @@
+IN(A, 10)   #Requisita a alocacao de 10 espacos para o processo A
+IN(B, 15)   #Requisita a alocacao de 15 espacos para o processo B
+IN(C, 23)   #Requisita a alocacao de 23 espacos para o processo C
+OUT(A)      #Libera o espaco alocado pelo processo A
+OUT(B)      #Libera o espaco alocado pelo processo B
+In(D, 13)   #Requisita a alocacao de 13 espacos para o processo D
+OUT(C)      #Libera o espaco alocado pelo processo C
+in(E,32)    #Requisita a alocacao de 32 espacos para o processo E
+out(E)      #Libera o espaco alocado pelo processo E
+OuT(D)      #Libera o espaco alocado pelo processo D

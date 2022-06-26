@@ -12,6 +12,7 @@
     <ItemGroup>
       <PackageReference Include="Spectre.Console" Version="0.44.1-preview.0.17" />
       <PackageReference Include="Spectre.Console.ImageSharp" Version="0.44.1-preview.0.17" />
+      <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0-preview.5.22301.12" />
     </ItemGroup>
 
     <ItemGroup>
@@ -31,6 +32,9 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Input\ExFixo.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="App.config">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

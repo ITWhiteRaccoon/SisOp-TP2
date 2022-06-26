@@ -60,7 +60,7 @@ public class GerenciadorVariavel
         {
             for (var i = 0; i < _mapa.Count; i++)
             {
-                if (_mapa[i].Processo == null && //Quer dizer que marca espaço livre, não processo
+                if (_mapa[i].Processo == null && //Quer dizer que marca espaco livre, nao processo
                     _mapa[i].Tamanho >= tamanhoInserido && //Cabe o processo
                     (_mapa[i].Tamanho < tamanhoEscolhido || tamanhoEscolhido == null)) //Best-fit
                 {
@@ -73,7 +73,7 @@ public class GerenciadorVariavel
         {
             for (var i = 0; i < _mapa.Count; i++)
             {
-                if (_mapa[i].Processo == null && //Quer dizer que marca espaço livre, não processo
+                if (_mapa[i].Processo == null && //Quer dizer que marca espaco livre, nao processo
                     _mapa[i].Tamanho >= tamanhoInserido && //Cabe o processo
                     (_mapa[i].Tamanho > tamanhoEscolhido || tamanhoEscolhido == null)) //Worst-fit
                 {
@@ -102,7 +102,7 @@ public class GerenciadorVariavel
         }
 
         throw new OutOfMemoryException(
-            $"Não há espaço suficiente para o processo {processoInserido} de tamanho {tamanhoInserido}.");
+            $"Nao ha espaco suficiente para o processo {processoInserido} de tamanho {tamanhoInserido}.");
     }
 
     private void Remover(string processoRemovido)

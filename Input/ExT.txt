@@ -1,10 +1,10 @@
-IN(A, 10)   #Requisita a alocação de 10 espaços para o processo A
-IN(B, 15)   #Requisita a alocação de 15 espaços para o processo B
-IN(C, 23)   #Requisita a alocação de 23 espaços para o processo C
-OUT(A)      #Libera o espaço alocado pelo processo A
-OUT(B)      #Libera o espaço alocado pelo processo B
-In(D, 13)   #Requisita a alocação de 13 espaços para o processo D
-OUT(C)      #Libera o espaço alocado pelo processo C
-in(E,32)    #Requisita a alocação de 32 espaços para o processo E
-out(E)      #Libera o espaço alocado pelo processo E
-OuT(D)      #Libera o espaço alocado pelo processo D
+IN(A, 10)   #Requisita a alocacao de 10 espacos para o processo A
+IN(B, 15)   #Requisita a alocacao de 15 espacos para o processo B
+IN(C, 23)   #Requisita a alocacao de 23 espacos para o processo C
+OUT(A)      #Libera o espaco alocado pelo processo A
+OUT(B)      #Libera o espaco alocado pelo processo B
+In(D, 13)   #Requisita a alocacao de 13 espacos para o processo D
+OUT(C)      #Libera o espaco alocado pelo processo C
+in(E,32)    #Requisita a alocacao de 32 espacos para o processo E
+out(E)      #Libera o espaco alocado pelo processo E
+OuT(D)      #Libera o espaco alocado pelo processo D

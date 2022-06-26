@@ -96,7 +96,7 @@ public class GerenciadorFixo
         }
 
         throw new OutOfMemoryException(
-            $"Não há espaço suficiente para o processo {processoInserido} de tamanho {tamanhoInserido}.");
+            $"Nao ha espaco suficiente para o processo {processoInserido} de tamanho {tamanhoInserido}.");
     }
 
     private void Remover(string processo)
