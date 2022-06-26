@@ -21,7 +21,7 @@ public static class Program
                 .AddChoices(listaArquivos)
         );
         arquivo = $"{InputFolder}/{arquivo}";
-        Console.WriteLine($"Arquivo selecionado: {arquivo}");
+        AnsiConsole.MarkupLine($"Arquivo selecionado: [blue]{arquivo}[/]");
 
         var requisicoes = Util.CarregarArquivo(arquivo);
 
@@ -33,14 +33,14 @@ public static class Program
                     : ValidationResult.Error()
                 )
         );
-        Console.WriteLine($"Tamanho de memoria selecionado: {tamanhoMemoria}");
+        AnsiConsole.MarkupLine($"Tamanho de memoria selecionado: [blue]{tamanhoMemoria}[/]");
 
         var tipoParticao = Parse<TipoParticao>(AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title("Qual o [green]tipo de particao[/]?")
                 .AddChoices("Fixa", "Variavel", "Buddy")
         ));
-        Console.WriteLine($"Tipo de particao selecionado: {tipoParticao}");
+        AnsiConsole.MarkupLine($"Tipo de particao selecionado: [blue]{tipoParticao}[/]");
 
         switch (tipoParticao)
         {
@@ -56,7 +56,7 @@ public static class Program
                                 : ValidationResult.Error()
                         )
                 );
-                Console.WriteLine($"Tamanho de partição selecionado: {tamanhoParticao}");
+                AnsiConsole.MarkupLine($"Tamanho de partição selecionado: [blue]{tamanhoParticao}[/]");
                 var gerenciadorFixo = new GerenciadorFixo(tamanhoMemoria, tamanhoParticao);
                 gerenciadorFixo.Rodar(requisicoes);
                 break;
@@ -68,7 +68,7 @@ public static class Program
                         .Title("Qual a [green]politica de alocacao[/]?")
                         .AddChoices("BestFit", "WorstFit")
                 ));
-                Console.WriteLine($"Politica de alocacao selecionada: {politicaAlocacao}");
+                AnsiConsole.MarkupLine($"Politica de alocacao selecionada: [blue]{politicaAlocacao}[/]");
                 var gerenciadorVariavel = new GerenciadorVariavel(tamanhoMemoria, politicaAlocacao);
                 gerenciadorVariavel.Rodar(requisicoes);
                 break;
@@ -78,24 +78,6 @@ public static class Program
                 gerenciadorBuddy.Rodar(requisicoes);
                 break;
         }
-    }
-
-    private static void TesteArquivos()
-    {
-        Console.WriteLine("=== Ex1 ===");
-        Util.CarregarArquivo($"{InputFolder}/Ex1.txt");
-        Console.WriteLine("===     ===");
-        Console.WriteLine();
-
-        Console.WriteLine("=== Ex2 ===");
-        Util.CarregarArquivo($"{InputFolder}/Ex2.txt");
-        Console.WriteLine("===     ===");
-        Console.WriteLine();
-
-        Console.WriteLine("=== ExT ===");
-        Util.CarregarArquivo($"{InputFolder}/ExT.txt");
-        Console.WriteLine("===     ===");
-        Console.WriteLine();
     }
 
     private static void PromptUsuario() { }

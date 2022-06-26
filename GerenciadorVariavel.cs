@@ -16,6 +16,7 @@ public class GerenciadorVariavel
 
     public void Rodar(List<Requisicao> requisicoes)
     {
+        var excecoes = new StringBuilder();
         var table = new Table().RoundedBorder();
         table.AddColumns(
             new TableColumn("[bold underline]Comando[/]").Centered().NoWrap(),
@@ -33,7 +34,7 @@ public class GerenciadorVariavel
                 }
                 catch (OutOfMemoryException e)
                 {
-                    Console.WriteLine(e.Message);
+                    excecoes.AppendLine($"[red]{e.Message}[/]");
                 }
             }
             else
@@ -45,6 +46,10 @@ public class GerenciadorVariavel
         }
 
         AnsiConsole.Write(table);
+        if (excecoes.Length > 0)
+        {
+            AnsiConsole.Markup(excecoes.ToString());
+        }
     }
 
     private void Inserir(string processoInserido, uint tamanhoInserido)
@@ -126,19 +131,6 @@ public class GerenciadorVariavel
 
     public override string ToString()
     {
-        var sb = new StringBuilder("|");
-        foreach (var espaco in _mapa)
-        {
-            if (espaco.Processo == null)
-            {
-                sb.Append($" [green]{espaco.Tamanho}[/] |");
-            }
-            else
-            {
-                sb.Append($" [yellow]{espaco.Processo}[/] |");
-            }
-        }
-
-        return sb.ToString();
+        return $"|{string.Join('|', _mapa)}|";
     }
 }

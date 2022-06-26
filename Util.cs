@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+using Spectre.Console;
 
 namespace SisOp_TP2;
 
@@ -20,7 +21,7 @@ public class Util
 
             var comando = Enum.Parse<TipoRequisicao>(conteudo.Groups["comando"].Value);
             var processo = conteudo.Groups["processo"].Value;
-            var sb = new StringBuilder($"\u2713 {comando}\t{conteudo.Groups["processo"]}");
+            var sb = new StringBuilder($"[green]\u2713[/] {comando}\t{conteudo.Groups["processo"]}");
 
             if (comando == TipoRequisicao.IN)
             {
@@ -39,7 +40,7 @@ public class Util
                 requisicoes.Add(new Requisicao(comando, processo));
             }
 
-            Console.WriteLine(sb);
+            AnsiConsole.MarkupLine(sb.ToString());
         }
 
         return requisicoes;

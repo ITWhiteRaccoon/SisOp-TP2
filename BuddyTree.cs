@@ -141,7 +141,7 @@ public class BuddyTree
             {
                 return Tamanho == TamanhoOcupado
                     ? $" [yellow]{Processo}[/] "
-                    : $" [yellow]{Processo}[/] | [red]{Tamanho - TamanhoOcupado}[/] ";
+                    : $" [yellow]{Processo}[/] [red]{Tamanho - TamanhoOcupado}[/] ";
             }
 
             return $" [green]{Tamanho}[/] ";

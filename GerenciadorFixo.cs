@@ -5,19 +5,23 @@ namespace SisOp_TP2;
 
 public class GerenciadorFixo
 {
-    private List<Espaco> _mapa;
+    private Espaco[] _memoria;
     private uint _tamanhoParticao;
 
     public GerenciadorFixo(uint tamanhoMemoria, uint tamanhoParticao)
     {
-        _mapa = new List<Espaco> { new(null, 0, tamanhoMemoria) };
-        _tamanhoParticao = tamanhoParticao;
+        _memoria = new Espaco[tamanhoMemoria / tamanhoParticao];
+        for (var i = 0; i < _memoria.Length; i++)
+        {
+            _memoria[i] = new Espaco(null, (uint)(i * tamanhoParticao), tamanhoParticao);
+        }
 
-        //TODO: CHECAR SE O TAMANHO DA PARTICAO É SEMPRE DIVISOR DO TAMANHO DA MEMORIA
+        _tamanhoParticao = tamanhoParticao;
     }
 
     public void Rodar(List<Requisicao> requisicoes)
     {
+        var excecoes = new StringBuilder();
         var table = new Table().RoundedBorder();
         table.AddColumns(
             new TableColumn("[bold underline]Comando[/]").Centered().NoWrap(),
@@ -35,7 +39,7 @@ public class GerenciadorFixo
                 }
                 catch (OutOfMemoryException e)
                 {
-                    Console.WriteLine(e.Message);
+                    excecoes.AppendLine($"[red]{e.Message}[/]");
                 }
             }
             else
@@ -44,6 +48,10 @@ public class GerenciadorFixo
             }
 
             table.AddRow(requisicao.ToString(), ToString());
+            if (excecoes.Length > 0)
+            {
+                AnsiConsole.Markup(excecoes.ToString());
+            }
         }
 
         AnsiConsole.Write(table);
@@ -51,52 +59,39 @@ public class GerenciadorFixo
 
     private void Inserir(string processoInserido, uint tamanhoInserido)
     {
-        int? indiceEscolhido = null;
-        uint? tamanhoEscolhido = null;
-
-        //TODO: Implementar lógica de inserção
-        for (var i = 0; i < _mapa.Count; i++)
+        var indiceInicial = -1;
+        uint espacoLivre = 0;
+        for (var i = 0; i < _memoria.Length; i++)
         {
-            if (_mapa[i].Processo == null) //Quer dizer que marca espaço livre, não processo
+            if (_memoria[i].Processo == null)
             {
-                if (_mapa[i].Tamanho >= tamanhoInserido &&
-                    (_mapa[i].Tamanho < tamanhoEscolhido || tamanhoEscolhido == null))
+                if (indiceInicial == -1)
                 {
-                    indiceEscolhido = i;
-                    tamanhoEscolhido = _mapa[i].Tamanho;
+                    indiceInicial = i;
+                }
+
+                espacoLivre += _memoria[i].Tamanho;
+                if (espacoLivre >= tamanhoInserido)
+                {
+                    var restaInserir = (int)tamanhoInserido;
+                    var indice = indiceInicial;
+                    while (restaInserir > 0)
+                    {
+                        _memoria[indice].Processo = processoInserido;
+                        _memoria[indice].TamanhoOcupado = restaInserir > _tamanhoParticao
+                            ? _tamanhoParticao
+                            : (uint)restaInserir;
+                        restaInserir -= (int)_tamanhoParticao;
+                        indice++;
+                    }
+
+                    return;
                 }
             }
-        }
-
-        for (var i = 0; i < _mapa.Count; i++)
-        {
-            if (_mapa[i].Processo == null) //Quer dizer que marca espaço livre, não processo
+            else
             {
-                if (_mapa[i].Tamanho >= tamanhoInserido &&
-                    (_mapa[i].Tamanho > tamanhoEscolhido || tamanhoEscolhido == null))
-                {
-                    indiceEscolhido = i;
-                    tamanhoEscolhido = _mapa[i].Tamanho;
-                }
-            }
-        }
-
-
-        if (indiceEscolhido != null && tamanhoEscolhido != null)
-        {
-            if (tamanhoInserido == tamanhoEscolhido)
-            {
-                _mapa[indiceEscolhido.Value].Processo = processoInserido;
-                return;
-            }
-
-            if (tamanhoInserido < tamanhoEscolhido)
-            {
-                var espacoNovo = new Espaco(processoInserido, _mapa[indiceEscolhido.Value].Inicio, tamanhoInserido);
-                _mapa[indiceEscolhido.Value].Inicio += tamanhoInserido;
-                _mapa[indiceEscolhido.Value].Tamanho -= tamanhoInserido;
-                _mapa.Insert(indiceEscolhido.Value, espacoNovo);
-                return;
+                espacoLivre = 0;
+                indiceInicial = -1;
             }
         }
 
@@ -104,27 +99,20 @@ public class GerenciadorFixo
             $"Não há espaço suficiente para o processo {processoInserido} de tamanho {tamanhoInserido}.");
     }
 
-    private bool Remover(string processo)
+    private void Remover(string processo)
     {
-        //TODO: Implementar lógica de remoção
-        return false;
+        foreach (var espaco in _memoria)
+        {
+            if (espaco.Processo == processo)
+            {
+                espaco.Processo = null;
+                espaco.TamanhoOcupado = null;
+            }
+        }
     }
 
     public override string ToString()
     {
-        var sb = new StringBuilder("|");
-        foreach (var espaco in _mapa)
-        {
-            if (espaco.Processo == null)
-            {
-                sb.Append($" [green]{espaco.Tamanho}[/] |");
-            }
-            else
-            {
-                sb.Append($" [red]{espaco.Processo}[/] |");
-            }
-        }
-
-        return sb.ToString();
+        return $"|{string.Join<Espaco>('|', _memoria)}|";
     }
 }

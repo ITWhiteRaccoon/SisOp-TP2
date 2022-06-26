@@ -14,6 +14,7 @@ public class GerenciadorBuddy
 
     public void Rodar(List<Requisicao> requisicoes)
     {
+        var excecoes = new StringBuilder();
         var table = new Table().RoundedBorder();
         table.AddColumns(
             new TableColumn("[bold underline]Comando[/]").Centered().NoWrap(),
@@ -31,7 +32,7 @@ public class GerenciadorBuddy
                 }
                 catch (OutOfMemoryException e)
                 {
-                    Console.WriteLine(e.Message);
+                    excecoes.AppendLine($"[red]{e.Message}[/]");
                 }
             }
             else
@@ -40,6 +41,10 @@ public class GerenciadorBuddy
             }
 
             table.AddRow(requisicao.ToString(), ToString());
+            if (excecoes.Length > 0)
+            {
+                AnsiConsole.Markup(excecoes.ToString());
+            }
         }
 
         AnsiConsole.Write(table);
